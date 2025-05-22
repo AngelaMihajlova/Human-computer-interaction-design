@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container-fluid p-0 align-items-center">
+        <img src="{% static 'cover1.jpg' %}" class="img-fluid w-100">
+    </div>
+    <div class="row bg-secondary-subtle justify-content-center p-5">
+        <p class="fs-4 w-75 text-center fw-bold text-dark">
+            Where your next adventure begins.
+        </p>
+    </div>
+    <div class="row p-5">
+        <p class="fs-5 text-danger fw-bold text-center">Offers</p>
+    </div>
+
+    <div class="row">
+    {% for guide in guides %}
+        <div class="col-4 px-5">
+            <div class="card m-3">
+                {% if guide.image %}
+                    <img src="{{ guide.image.url }}" class="card-img-top" alt="...">
+                {% else %}
+                    <img src="{% static 'default-image.png' %}" class="card-img-top" alt="default image">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ guide.place }}</h5>
+                    <hr>
+                    <p class="card-text">Price: {{ guide.price }}</p>
+                    <p class="card-text">Duration: {{ guide.duration }}</p>
+                    <p class="card-text">Tour guide: {{ guide.touristGuide }}</p>
+                    <a href="{% url 'details' guide.id %}" class="btn btn-success">Details</a>
+                    <a href="{% url 'edit-travel' guide.id %}" class="btn btn-secondary">Edit</a>
+                    <a href="{% url 'delete-travel' guide.id %}" class="btn btn-danger"
+                    onclick="return confirm('Are you sure you want to delete this travel?');">
+                    Delete
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
+{% endblock %}
